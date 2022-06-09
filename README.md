@@ -3,10 +3,17 @@
 ## Description
 A command-line application that manage a company's employee database, using Node.js, Inquirer, and MySQL.
 
+## Table of Contents
+- [Installation](#installation)
+- [Usage](#usage)
+
 ## Installation
  - Clone the repo
  - Install following dependencies: `inquirer`, `mysql`, `console.table`
- - Run the application with `node server.js`
+ - Run the application with `node server.js` to invoke application
+
+## Usage
+Allow user to view and manager the departments, roles, and employees in their company. 
 
 ## Demo
 ![Untitled_ Jun 8, 2022 10_53 PM](https://user-images.githubusercontent.com/90424035/172775233-2e44ce44-790b-4df5-8545-f054e40dae33.gif)
@@ -37,14 +44,3 @@ A command-line application that manage a company's employee database, using Node
         THEN I am prompted to select an employee to update and their new role and this information is updated in the database 
 A command-line application that manages a company's employee database, using Node.js, Inquirer, and MySQL.
 
-## Table of Contents
-- [Installation](#installation)
-- [Usage](#usage)
-- [Credits](#credits)
-
-## Installation
-Clone the repository from Github to your local machine, install necessary dependencies with following command: ```npm install``` . Then run the command: ```node server.js``` to invoke the application.
-
-
-## Usage
-Allow user to view and manager the departments, roles, and employees in their company. 
