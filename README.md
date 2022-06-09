@@ -5,10 +5,11 @@ A command-line application that manage a company's employee database, using Node
 
 ## Installation
  - Clone the repo
- - Install following dependencies: `inquirer`, `mysql`, `console.table` with `npm i`
+ - Install following dependencies: `inquirer`, `mysql`, `console.table`
  - Run the application with `node server.js`
 
 ## Demo
+![Untitled_ Jun 8, 2022 10_53 PM](https://user-images.githubusercontent.com/90424035/172775233-2e44ce44-790b-4df5-8545-f054e40dae33.gif)
 
 ## User Story
         AS A business owner

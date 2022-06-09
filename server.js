@@ -9,8 +9,8 @@ const db = mysql.createConnection(
         port: 3306,
         // MySQL username
         user: 'root',
-        // MySQL password
-        password: 'Cali2010',
+        // Your MySQL password
+        password: 'YOUR PASSWORD', 
         database: 'employees_db'
     },
     console.log(`Connected to the employee_db database.`)
@@ -96,8 +96,7 @@ function openDB() {
 
 // view all departments
 function viewAllDepartments() {
-    console.log(`------------------------------------------------------`);
-    console.log(`All departments: \n`);
+    console.log(`\n All Departments: \n`);
     db.query('SELECT * FROM department', function (err, result) {
         console.table(result);
         openDB();
@@ -106,8 +105,7 @@ function viewAllDepartments() {
 
 // view all employees
 function viewAllEmployees() {
-    console.log(`------------------------------------------------------`);
-    console.log(`All employees: \n`);
+    console.log(`\n All Employees: \n`);
     db.query(`
     SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager 
     FROM employee
@@ -122,8 +120,7 @@ function viewAllEmployees() {
 
 // view all roles 
 function viewAllRoles() {
-    console.log(`------------------------------------------------------`);
-    console.log(`All roles: \n`);
+    console.log(`\n All Roles: \n`);
     db.query(`
     SELECT role.id, role.title, department.name AS department, role.salary 
     FROM role
@@ -145,6 +142,7 @@ function selectDepartment() {
     return deptArr;
 };
 
+// role array
 let roleArr = [];
 function selectRole() {
     db.query('SELECT * FROM role', function (err, result) {
@@ -156,7 +154,8 @@ function selectRole() {
     return roleArr;
 };
 
-let managerArr = [];
+// manager array
+let managerArr = []; 
 function selectManager() {
     db.query('SELECT CONCAT(first_name, " ", last_name) AS manager FROM employee', function (err, result) {
         if (err) throw err;
@@ -167,10 +166,17 @@ function selectManager() {
     return managerArr;
 };
 
-// let employeeArr = [];
-// function selectEmployee() {
-//     db.query('')
-// }
+// employee array
+let employeeArr = [];
+function selectEmployee() {
+    db.query(`SELECT employee.first_name, employee.last_name FROM employee`, function(err, result) {
+        if (err) throw err;
+        for (let i = 0; i < result.length; i++) {
+            employeeArr.push(result[i].first_name, + ' ' + result[i].last_name);
+        }
+    })
+    return employeeArr;
+}
 
 // add new department
 function addDepartment() {
@@ -188,7 +194,7 @@ function addDepartment() {
                 console.log(`Added ${answer.newDepartment} to the database`);
             });
             db.query('SELECT * FROM department', function (err, result) {
-                console.log(`Current departments: \n`);
+                console.log(`\n Current Departments: \n`);
                 console.table(result);
                 openDB();
             });
@@ -232,7 +238,6 @@ function addEmployee() {
                 if (err) throw (err);
                 console.log(`Added new employee to the database`);
             })
-            
             db.query('SELECT * FROM employee', function(err, result) {
                 console.table(result);
                 openDB();
@@ -271,6 +276,7 @@ function addRole() {
             })
            
             db.query('SELECT * FROM role', function(err, result) {
+                console.log(`\n Current Roles: \n`);
                 console.table(result);
                 openDB();
             })
@@ -283,9 +289,9 @@ function updateEmployeeRole() {
         .prompt([
             {
                 type: 'list',
-                message: 'Which employee\'s role do you want to update?',
+                message: 'Which employee\'s do you want to update?',
                 name: 'updateEmployee',
-                choices: selectManager()
+                choices: selectEmployee()
             },
             {
                 type: 'list',
@@ -295,13 +301,36 @@ function updateEmployeeRole() {
             }
         ])
         .then((answer) => {
-            // const newRoleID = answer.new
             db.query(`
-            UPDATE employee SET role_id = `)
-            db.query('UPDATE employee SET role_id = ? WHERE id = ?', [answer.updateEmployeeRole, answer.newRoleID],function(err, result) {
+            UPDATE employee SET role.title = ${answer.newRoleID}
+            WHERE title = "${answer.updateEmployee}"`, (err, result) => {
                 if (err) throw err;
+                console.log(`Updated employee to new role`);
+            })
+            db.query('SELECT * FROM employee', function (err, result) {
+                console.log('Employee after updated: \n');
                 console.table(result);
                 openDB();
-            });
+            })
+        });
+};
+
+// delete an employee
+function deleteEmployee() {
+    inquirer
+        .prompt([
+            {
+                type: 'list',
+                name: 'employee',
+                message: 'Which employee would you like to delete?',
+                choices: [...employeeArr]
+            }
+        ])
+        .then((answer) => {
+            db.query(`DELETE FROM employee WHERE CONCAT(first_name, ' ', last_name) = "${answer.employee}"`, (err, result) => {
+                if (err) throw err;
+                console.log('Employee deleted from database');
+                openDB();
+            })
         });
 };
