@@ -34,3 +34,16 @@ A command-line application that manage a company's employee database, using Node
         THEN I am prompted to enter the employee’s first name, last name, role, and manager, and that employee is added to the database
         WHEN I choose to update an employee role
         THEN I am prompted to select an employee to update and their new role and this information is updated in the database 
+A command-line application that manages a company's employee database, using Node.js, Inquirer, and MySQL.
+
+## Table of Contents
+- [Installation](#installation)
+- [Usage](#usage)
+- [Credits](#credits)
+
+## Installation
+Clone the repository from Github to your local machine, install necessary dependencies with following command: ```npm install``` . Then run the command: ```node server.js``` to invoke the application.
+
+
+## Usage
+Allow user to view and manager the departments, roles, and employees in their company. 
